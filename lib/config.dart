@@ -11,4 +11,7 @@ class Config {
   static String sliderURL =
       "https://khoj-tech.com/wp-json/acf/v3/home-banner/134";
   static String categoriesURL = "products/categories";
+  static String productsURL = "products";
+  static String trendingProductsTagId = "38";
+
 }

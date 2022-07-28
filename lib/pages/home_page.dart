@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:khoj_tech/api_service.dart';
+import 'package:khoj_tech/config.dart';
 import 'package:khoj_tech/models/slider_model.dart';
 import 'package:khoj_tech/widgets/widget_home_categories.dart';
+import 'package:khoj_tech/widgets/widget_home_products.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,6 +30,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        color: const Color(
+          0xfff2f2f2,
+        ),
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: ListView(
@@ -40,6 +45,13 @@ class _HomePageState extends State<HomePage> {
               height: MediaQuery.of(context).size.height * .04,
             ),
             WidgetCategories(),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .04,
+            ),
+            WidgetHomeProducts(
+              labelName: "Trending Products",
+              tagId: Config.trendingProductsTagId,
+            )
           ],
         ),
       ),

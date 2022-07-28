@@ -97,7 +97,7 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
                 fontFamily: 'Avenir',
               ),
             ),
-            icon: Badge(child: Icon(Icons.shopping_cart), value: '0'),
+            icon: Badge(child: Icon(Icons.shopping_cart), value: '0',),
               
             activeColor: const Color(
               0xff292665,

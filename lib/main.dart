@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:khoj_tech/pages/product_page.dart';
+import 'package:khoj_tech/provider/products_provider.dart';
 import 'package:khoj_tech/widgets/bottom_nav_bar_widget.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,16 +11,21 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Khoj Tech',
-      theme: ThemeData(
-        fontFamily: 'Avenir',
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ProductProvider(),
+        child: ProductPage(),)
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Khoj Tech',
+        theme: ThemeData(
+          fontFamily: 'Avenir',
+        ),
+        home: const BottomNavBarWidget(),
       ),
-      home: const BottomNavBarWidget(),
     );
   }
 }

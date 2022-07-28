@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khoj_tech/api_service.dart';
 import 'package:khoj_tech/models/category.dart';
+import 'package:khoj_tech/pages/product_page.dart';
 import 'package:khoj_tech/widgets/text_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
@@ -29,13 +30,26 @@ class _WidgetCategoriesState extends State<WidgetCategories> {
         Container(
           width: MediaQuery.of(context).size.width * .9,
           alignment: Alignment.centerLeft,
-          child: const TextWidget(
-            text: 'Categories',
-            color: Color(
-              0xff414042,
-            ),
-            fontSize: 17,
-            fontWeight: FontWeight.bold,
+          child: Row(
+            children: [
+              TextWidget(
+                text: 'Categories',
+                color: Color(
+                  0xff414042,
+                ),
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+              ),
+              Spacer(),
+              TextWidget(
+                text: 'View All',
+                color: Color(
+                  0xff292665,
+                ),
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+              ),
+            ],
           ),
         ),
         SizedBox(
@@ -225,52 +239,59 @@ class _WidgetCategoriesState extends State<WidgetCategories> {
     return Container(
       width: MediaQuery.of(context).size.width * .9,
       child: GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
-          ),
-          itemCount: categories.length,
-          itemBuilder: (BuildContext ctx, index) {
-            var data = categories[index];
-            return GestureDetector(
-              onTap: () async {},
-              child: Container(
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.network(
-                      "${data.image!.url}",
-                      // "${homeController.categoryList[index].image}",
-                      fit: BoxFit.cover,
-                      height: MediaQuery.of(context).size.height * .07,
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * .018,
-                    ),
-                    TextWidget(
-                      text: data.categoryName,
-                      fontSize: 12.5,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.center,
-                      color: Color(
-                        0xff414042,
-                      ),
-                    ),
-                  ],
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(
-                    8,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+        ),
+        itemCount: categories.length,
+        itemBuilder: (BuildContext ctx, index) {
+          var data = categories[index];
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProductPage(
+                            categoryId: data.categoryId,
+                          )));
+            },
+            child: Container(
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.network(
+                    "${data.image!.url}",
+                    fit: BoxFit.cover,
+                    height: MediaQuery.of(context).size.height * .07,
                   ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .018,
+                  ),
+                  TextWidget(
+                    text: data.categoryName,
+                    fontSize: 12.5,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.center,
+                    color: Color(
+                      0xff414042,
+                    ),
+                  ),
+                ],
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(
+                  8,
                 ),
               ),
-            );
-          }),
+            ),
+          );
+        },
+      ),
     );
   }
 }
