@@ -41,7 +41,7 @@ class Product {
         sku: json["sku"],
         price: json["price"],
         regularPrice: json["regular_price"],
-        salePrice: json["sale_price"],
+        salePrice: json["sale_price"] != "" ? json["sale_price"] : json["regular_price"],
         stockStatus: json["stock_status"],
         categories: List<Categories>.from(
             json["categories"].map((x) => Categories.fromJson(x))),
@@ -61,6 +61,16 @@ class Product {
         "categories": List<dynamic>.from(categories!.map((x) => x.toJson())),
         "images": List<dynamic>.from(images!.map((x) => x.toJson())),
       };
+
+   calculateDiscount(){
+    double regularPrice = double.parse(this.regularPrice!);
+    double salePrice  = this.salePrice != "" ? double.parse(this.salePrice!) : regularPrice;
+    double discount = regularPrice - salePrice;
+    double disPercent = (discount / regularPrice) * 100;
+
+    return disPercent.round();
+    
+   }
 }
 
 class Categories {

@@ -1,11 +1,9 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:khoj_tech/config.dart';
 import 'package:khoj_tech/models/category.dart';
 import 'package:khoj_tech/models/product.dart';
 import 'package:khoj_tech/models/request_login_model.dart';
-
 import 'package:khoj_tech/models/request_signup_model.dart';
 import 'package:khoj_tech/models/response_login_model.dart';
 import 'package:khoj_tech/models/response_signup_model.dart';
@@ -15,7 +13,7 @@ class APIService {
   Future<ResponseSignupModel> postSignup(RequestSignupModel signupModel) async {
     final response = await http.post(
       Uri.parse(Config.signupURL),
-      body: jsonEncode(signupModel.toJson()),
+      body: jsonEncode(signupModel.toJson(),),
       headers: {"Content-Type": "application/json"},
     );
 
@@ -103,6 +101,7 @@ class APIService {
         url,
       ),
     );
+    print(productFromJson(response.body));
     return productFromJson(
       response.body,
     );

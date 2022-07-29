@@ -37,7 +37,7 @@ class ProductProvider with ChangeNotifier {
 
   setLoadingState(LoadMoreStatus loadMoreStatus) {
     _loadMoreStatus = loadMoreStatus;
-     notifyListeners();
+   notifyListeners();
   }
 
   setSortOrder(SortBy sortBy) {
