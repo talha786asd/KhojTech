@@ -3,8 +3,8 @@ import 'dart:convert';
 List<Product> productFromJson(String str) =>
     List<Product>.from(json.decode(str).map((x) => Product.fromJson(x)));
 
-String productToJson(List<Product> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+// String productToJson(List<Product> data) =>
+//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Product {
   Product({
@@ -19,6 +19,7 @@ class Product {
     this.stockStatus,
     this.categories,
     this.images,
+    this.attributes,
   });
 
   int? id;
@@ -32,6 +33,7 @@ class Product {
   String? stockStatus;
   List<Categories>? categories;
   List<Img1>? images;
+  List<Attributes>? attributes;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
@@ -46,21 +48,23 @@ class Product {
         categories: List<Categories>.from(
             json["categories"].map((x) => Categories.fromJson(x))),
         images: List<Img1>.from(json["images"].map((x) => Img1.fromJson(x))),
+         attributes: List<Attributes>.from(
+            json["attributes"].map((x) => Attributes.fromJson(x))),
       );
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "description": description,
-        "short_description": shortDescription,
-        "sku": sku,
-        "price": price,
-        "regular_price": regularPrice,
-        "sale_price": salePrice,
-        "stock_status": stockStatus,
-        "categories": List<dynamic>.from(categories!.map((x) => x.toJson())),
-        "images": List<dynamic>.from(images!.map((x) => x.toJson())),
-      };
+  // Map<String, dynamic> toJson() => {
+  //       "id": id,
+  //       "name": name,
+  //       "description": description,
+  //       "short_description": shortDescription,
+  //       "sku": sku,
+  //       "price": price,
+  //       "regular_price": regularPrice,
+  //       "sale_price": salePrice,
+  //       "stock_status": stockStatus,
+  //       "categories": List<dynamic>.from(categories!.map((x) => x.toJson())),
+  //       "images": List<dynamic>.from(images!.map((x) => x.toJson())),
+  //     };
 
    calculateDiscount(){
     double regularPrice = double.parse(this.regularPrice!);
@@ -107,4 +111,22 @@ class Img1 {
   Map<String, dynamic> toJson() => {
         "src": src,
       };
+}
+
+class Attributes {
+  int? id;
+  String? name;
+  List<String>? options;
+
+  Attributes({
+    this.id,
+    this.name,
+    this.options,
+  });
+
+    factory Attributes.fromJson(Map<String, dynamic> json) => Attributes(
+        id: json["id"],
+        name: json["name"],
+        options: List<String>.from(json["options"].map((x) => x)),
+      );
 }

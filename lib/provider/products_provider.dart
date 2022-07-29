@@ -37,7 +37,7 @@ class ProductProvider with ChangeNotifier {
 
   setLoadingState(LoadMoreStatus loadMoreStatus) {
     _loadMoreStatus = loadMoreStatus;
-   notifyListeners();
+    notifyListeners();
   }
 
   setSortOrder(SortBy sortBy) {
@@ -45,12 +45,15 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  fetchProducts(pageNumber,
-      {String? strSearch,
+  fetchProducts(
+      pageNumber,
+      {
+      String? strSearch,
       String? tagName,
       String? categoryId,
       String? sortBy,
-      String sortOrder = 'asc'}) async {
+      String sortOrder = 'asc',
+     }) async {
     List<Product> itemModel = await _apiService!.getProducts(
       strSearch: strSearch,
       tagName: tagName,

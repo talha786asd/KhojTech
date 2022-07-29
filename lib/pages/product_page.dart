@@ -28,13 +28,15 @@ class _ProductPageState extends BasePageState<ProductPage> {
     SortBy('price', 'Price: Low to High', 'asc'),
   };
 
-  @override
+ @override
   void initState() {
+   
     var productList = Provider.of<ProductProvider>(
       context,
       listen: false,
     );
-    productList.resetStreams();
+      Future.delayed(Duration.zero,(){
+            productList.resetStreams();
     productList.setLoadingState(
       LoadMoreStatus.INITIAL,
     );
@@ -55,6 +57,9 @@ class _ProductPageState extends BasePageState<ProductPage> {
     _searchQuery.addListener(() {
       _onSearchChange();
     });
+      
+  });
+
     super.initState();
   }
 
@@ -860,7 +865,7 @@ class _ProductPageState extends BasePageState<ProductPage> {
   Widget _productFilters() {
     return Container(
       height: 51,
-      margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+      margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
       child: Row(
         children: [
           Flexible(
@@ -870,24 +875,25 @@ class _ProductPageState extends BasePageState<ProductPage> {
               0xff292665,
             ),
             decoration: InputDecoration(
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.search,
                 color: Colors.grey,
               ),
               hintText: "Search",
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide.none),
+                  borderSide: BorderSide.none,
+                ),
               fillColor: const Color(0xfff2f2f2),
               filled: true,
             ),
           )),
-          SizedBox(
+          const SizedBox(
             width: 15,
           ),
           Container(
             decoration: BoxDecoration(
-              color: Color(0xfff2f2f2),
+              color: const Color(0xfff2f2f2),
               borderRadius: BorderRadius.circular(9),
             ),
             child: PopupMenuButton(
@@ -901,14 +907,14 @@ class _ProductPageState extends BasePageState<ProductPage> {
               itemBuilder: (BuildContext context) {
                 return _sortByOptions.map((item) {
                   return PopupMenuItem(
-                      value: item,
-                      child: Container(
-                        child: Text(item.text!),
-                     ),
+                    value: item,
+                    child: Container(
+                      child: Text(item.text!),
+                    ),
                   );
                 }).toList();
               },
-              icon: Icon(Icons.tune),
+              icon: const Icon(Icons.tune),
             ),
           )
         ],
