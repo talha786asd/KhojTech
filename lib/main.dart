@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khoj_tech/pages/product_page.dart';
+import 'package:khoj_tech/pages/splash_page.dart';
 import 'package:khoj_tech/provider/products_provider.dart';
 import 'package:khoj_tech/widgets/bottom_nav_bar_widget.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'Avenir',
         ),
-        home: const BottomNavBarWidget(),
+        home: const SplashScreen(),
       ),
     );
   }

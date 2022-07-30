@@ -193,8 +193,8 @@ class ProductCard extends StatelessWidget {
                               ),
                               borderRadius: BorderRadius.circular(50),
                             ),
-                            width: MediaQuery.of(context).size.width * .09,
-                            height: MediaQuery.of(context).size.height * .023,
+                            width: MediaQuery.of(context).size.width * .095,
+                            height: MediaQuery.of(context).size.height * .024,
                             child: Center(
                               child: TextWidget(
                                 text: '- ${data!.calculateDiscount()} %',

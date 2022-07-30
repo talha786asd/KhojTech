@@ -1,10 +1,16 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:khoj_tech/models/product.dart';
+import 'package:khoj_tech/models/variable_product.dart';
 import 'package:khoj_tech/utils/custom.stepper.dart';
+import 'package:khoj_tech/utils/expand_text.dart';
+import 'package:khoj_tech/widgets/widget_related_products.dart';
 
 class ProductDetailsWidget extends StatelessWidget {
-  ProductDetailsWidget({Key? key, this.data}) : super(key: key);
+  ProductDetailsWidget({Key? key, this.data, this.variableProducts}) : super(key: key);
+
+
+  List<VariableProduct>? variableProducts;
   Product? data;
   final CarouselController _controller = CarouselController();
   int? qty = 0;
@@ -49,25 +55,55 @@ class ProductDetailsWidget extends StatelessWidget {
                       fontSize: 25,
                       color: Colors.black,
                       fontWeight: FontWeight.bold),
-                ),Row(
+                ),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
+                    Visibility(
+                      visible: data!.type != "variable",
+                      child: Text(
                       data!.attributes != null && data!.attributes!.length > 0
-                          ? (data!.attributes![0].options!.join("-").toString() +
+                          ? (data!.attributes![0].options!
+                                  .join("-")
+                                  .toString() +
                               "" +
                               data!.attributes![0].name!)
                           : "",
-                    ),
-                    Text('PKR ${data!.salePrice}', style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
-                    ),)
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.grey[600],
+                            fontWeight: FontWeight.w500
+                          ),
+                    ),),
+                    Visibility(
+                      visible: data!.type == "variable",
+                      child: selectDropdown(
+                        context, "",
+                         this.variableProducts,
+                          (VariableProduct value){
+                            this.data!.price = value.price;
+                            this.data!.variableProduct = value;
+
+                         }
+                        ),
+                        ),
+                    
+                    Text(
+                      'PKR ${data!.price}',
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: Color(
+                                    0xff292665,
+                                  ),
+                          fontWeight: FontWeight.bold),
+                    )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -77,12 +113,36 @@ class ProductDetailsWidget extends StatelessWidget {
                       stepValue: 1,
                       iconSize: 22,
                       value: this.qty,
-                      onChanged: (value){
+                      onChanged: (value) {
                         print(value);
                       },
+                    ),
+                    FlatButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Add to Cart",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      color: Color(
+                                    0xff292665,
+                                  ),
+                      padding: EdgeInsets.all(15),
+                      shape: StadiumBorder(),
                     )
                   ],
+                ),
+                SizedBox(height: 5,),
+                ExpandText(
+                  labelHeader: "Product Details", shortDesc: data!.shortDescription,
+                  desc: data!.description,
+                ),
+                Divider(),
+                SizedBox(height: 10,),
+                WidgetRelatedProducts(
+                  labelName: 'Related Products',
+                  products: this.data!.relatedIds,
                 )
+
               ],
             )
           ],
@@ -145,5 +205,89 @@ class ProductDetailsWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  static Widget selectDropdown(
+    BuildContext context,
+    Object initialValue,
+    dynamic data,
+    Function onChanged, {
+      Function? onValidate,
+    }
+  ){
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Container(
+        height: 75,
+        width: 100,
+        padding: EdgeInsets.only(top: 5),
+        child: DropdownButtonFormField<VariableProduct>(
+          hint: Text("Select"),
+          value: null,
+          isDense: true,
+          decoration: fieldDecoration(context, "", ""),
+          onChanged: (VariableProduct? newValue) {
+            FocusScope.of(context).requestFocus(FocusNode());
+            onChanged(newValue);
+            
+          },
+         
+          items: data != null ? data.map<DropdownMenuItem<VariableProduct>>(
+            (VariableProduct data){
+              return DropdownMenuItem<VariableProduct>(
+                value: data,
+                child: Text(
+                  data.attributes!.first.option! + 
+                  " " +
+                  data.attributes!.first.name!,
+                  style: TextStyle(
+                    color: Colors.black
+                  ),
+                ));
+            },
+          ).toList()
+          : null,
+
+          
+        ),
+      ),
+    );
+  }
+
+  static InputDecoration fieldDecoration(
+    BuildContext context,
+    String hintText,
+    String helperText, {
+      Widget? prefixIcon,
+      Widget? suffixIcon,
+
+    }
+
+  ){
+    return InputDecoration(
+      contentPadding: EdgeInsets.all(6),
+      hintText: helperText,
+      helperText: helperText,
+      prefixIcon: prefixIcon,
+      suffixIcon: suffixIcon,
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color(
+                    0xff292665,
+                  ),
+          width: 1
+        )
+      ),
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color(
+                    0xff292665,
+                  ),
+          width: 1
+        )
+      )
+
+    );
+
   }
 }

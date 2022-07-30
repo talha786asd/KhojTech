@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:khoj_tech/api_service.dart';
 import 'package:khoj_tech/models/product.dart';
-import 'package:khoj_tech/widgets/icon_button_widget.dart';
-import 'package:khoj_tech/widgets/text_widget.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:khoj_tech/widgets/text_widget.dart';
 
-class WidgetHomeProducts extends StatefulWidget {
-  WidgetHomeProducts({Key? key, this.labelName, this.tagId}) : super(key: key);
+
+class WidgetRelatedProducts extends StatefulWidget {
+  WidgetRelatedProducts({Key? key, this.labelName, this.products})
+      : super(key: key);
 
   String? labelName;
-  String? tagId;
+  List<int>? products;
 
   @override
-  State<WidgetHomeProducts> createState() => _WidgetHomeProductsState();
+  State<WidgetRelatedProducts> createState() => _WidgetRelatedProductsState();
 }
 
-class _WidgetHomeProductsState extends State<WidgetHomeProducts> {
+class _WidgetRelatedProductsState extends State<WidgetRelatedProducts> {
   APIService? apiService;
 
   @override
@@ -26,8 +27,7 @@ class _WidgetHomeProductsState extends State<WidgetHomeProducts> {
 
   @override
   Widget build(BuildContext context) {
-    return
-     Column(
+    return Column(
       children: [
         Container(
           width: MediaQuery.of(context).size.width * .9,
@@ -67,7 +67,7 @@ class _WidgetHomeProductsState extends State<WidgetHomeProducts> {
 
   Widget _productList() {
     return FutureBuilder(
-        future: apiService!.getProducts(tagName: widget.tagId.toString()),
+        future: apiService!.getProducts(productsIds: widget.products),
         builder: (BuildContext context, AsyncSnapshot<List<Product>> model) {
           if (model.hasData) {
             return _buildList(model.data!);

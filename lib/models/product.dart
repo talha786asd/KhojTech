@@ -1,10 +1,10 @@
 import 'dart:convert';
 
+import 'package:khoj_tech/models/variable_product.dart';
+
 List<Product> productFromJson(String str) =>
     List<Product>.from(json.decode(str).map((x) => Product.fromJson(x)));
-
-// String productToJson(List<Product> data) =>
-//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+ 
 
 class Product {
   Product({
@@ -20,6 +20,9 @@ class Product {
     this.categories,
     this.images,
     this.attributes,
+    this.relatedIds,
+    this.type,
+    this.variableProduct
   });
 
   int? id;
@@ -34,6 +37,9 @@ class Product {
   List<Categories>? categories;
   List<Img1>? images;
   List<Attributes>? attributes;
+  List<int>? relatedIds;
+  String? type;
+  VariableProduct? variableProduct;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
@@ -43,13 +49,18 @@ class Product {
         sku: json["sku"],
         price: json["price"],
         regularPrice: json["regular_price"],
-        salePrice: json["sale_price"] != "" ? json["sale_price"] : json["regular_price"],
+        salePrice: json["sale_price"] != ""
+            ? json["sale_price"]
+            : json["regular_price"],
         stockStatus: json["stock_status"],
+        type: json["type"],
+
         categories: List<Categories>.from(
             json["categories"].map((x) => Categories.fromJson(x))),
         images: List<Img1>.from(json["images"].map((x) => Img1.fromJson(x))),
-         attributes: List<Attributes>.from(
+        attributes: List<Attributes>.from(
             json["attributes"].map((x) => Attributes.fromJson(x))),
+        relatedIds: json["cross_sell_ids"].cast<int>(),
       );
 
   // Map<String, dynamic> toJson() => {
@@ -66,15 +77,17 @@ class Product {
   //       "images": List<dynamic>.from(images!.map((x) => x.toJson())),
   //     };
 
-   calculateDiscount(){
+  calculateDiscount() {
+    double disPercent = 0;
+    if(this.regularPrice != ""){
     double regularPrice = double.parse(this.regularPrice!);
-    double salePrice  = this.salePrice != "" ? double.parse(this.salePrice!) : regularPrice;
+    double salePrice =
+        this.salePrice != "" ? double.parse(this.salePrice!) : regularPrice;
     double discount = regularPrice - salePrice;
-    double disPercent = (discount / regularPrice) * 100;
-
+      disPercent = (discount / regularPrice) * 100;
+    }
     return disPercent.round();
-    
-   }
+  }
 }
 
 class Categories {
@@ -124,7 +137,7 @@ class Attributes {
     this.options,
   });
 
-    factory Attributes.fromJson(Map<String, dynamic> json) => Attributes(
+  factory Attributes.fromJson(Map<String, dynamic> json) => Attributes(
         id: json["id"],
         name: json["name"],
         options: List<String>.from(json["options"].map((x) => x)),

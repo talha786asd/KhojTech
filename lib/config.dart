@@ -13,5 +13,7 @@ class Config {
   static String categoriesURL = "products/categories";
   static String productsURL = "products";
   static String trendingProductsTagId = "38";
+  static String variableProductsURL = "variations";
+
 
 }

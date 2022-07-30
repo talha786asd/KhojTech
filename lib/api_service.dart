@@ -8,12 +8,15 @@ import 'package:khoj_tech/models/request_signup_model.dart';
 import 'package:khoj_tech/models/response_login_model.dart';
 import 'package:khoj_tech/models/response_signup_model.dart';
 import 'package:khoj_tech/models/slider_model.dart';
+import 'package:khoj_tech/models/variable_product.dart';
 
 class APIService {
   Future<ResponseSignupModel> postSignup(RequestSignupModel signupModel) async {
     final response = await http.post(
       Uri.parse(Config.signupURL),
-      body: jsonEncode(signupModel.toJson(),),
+      body: jsonEncode(
+        signupModel.toJson(),
+      ),
       headers: {"Content-Type": "application/json"},
     );
 
@@ -65,6 +68,7 @@ class APIService {
     String? strSearch,
     String? tagName,
     String? categoryId,
+    List<int>? productsIds,
     String? sortBy,
     String sortOrder = 'asc',
   }) async {
@@ -80,6 +84,9 @@ class APIService {
     }
     if (tagName != null) {
       parameter += "&tag=$tagName";
+    }
+    if (productsIds != null) {
+      parameter += "&include=${productsIds.join(",").toString()}";
     }
     if (categoryId != null) {
       parameter += "&category=$categoryId";
@@ -103,6 +110,22 @@ class APIService {
     );
     print(productFromJson(response.body));
     return productFromJson(
+      response.body,
+    );
+  }
+
+  Future<List<VariableProduct>> getVariableProducts(int productId) async {
+    String url = Config.url +
+        Config.productsURL +
+        "/${productId.toString()}/${Config.variableProductsURL}?consumer_key=${Config.key}&consumer_secret=${Config.secret}";
+
+    var response = await http.get(
+      Uri.parse(
+        url,
+      ),
+    );
+
+    return variableProductFromJson(
       response.body,
     );
   }
