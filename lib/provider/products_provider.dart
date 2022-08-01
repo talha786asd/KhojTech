@@ -46,14 +46,13 @@ class ProductProvider with ChangeNotifier {
   }
 
   fetchProducts(
-      pageNumber,
-      {
-      String? strSearch,
-      String? tagName,
-      String? categoryId,
-      String? sortBy,
-      String sortOrder = 'asc',
-     }) async {
+    pageNumber, {
+    String? strSearch,
+    String? tagName,
+    String? categoryId,
+    String? sortBy,
+    String sortOrder = 'asc',
+  }) async {
     List<Product> itemModel = await _apiService!.getProducts(
       strSearch: strSearch,
       tagName: tagName,
@@ -67,7 +66,6 @@ class ProductProvider with ChangeNotifier {
     if (itemModel.length > 0) {
       _productList!.addAll(itemModel);
     }
-
     setLoadingState(LoadMoreStatus.STABLE);
   }
 }

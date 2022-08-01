@@ -1,8 +1,8 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:khoj_tech/pages/account_page.dart';
 import 'package:khoj_tech/pages/home_page.dart';
 import 'package:khoj_tech/widgets/badge.dart';
- 
 
 class BottomNavBarWidget extends StatefulWidget {
   const BottomNavBarWidget({Key? key}) : super(key: key);
@@ -38,8 +38,8 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
           );
         },
         children: <Widget>[
-          HomePage(),
-          Container(),
+          const HomePage(),
+          AccountPage(),
           Container(),
         ],
       ),
@@ -97,8 +97,9 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
                 fontFamily: 'Avenir',
               ),
             ),
-            icon: Badge(child: Icon(Icons.shopping_cart), value: '0',),
-              
+            icon: const Icon(
+              Icons.shopping_cart,
+            ),
             activeColor: const Color(
               0xff292665,
             ),

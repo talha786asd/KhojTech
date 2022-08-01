@@ -22,11 +22,14 @@ class Category {
   });
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
-      categoryId: json["id"],
-      categoryName: json["name"],
-      categoryDesc: json["description"],
-      parent: json["parent"],
-      image: Img.fromJson(json['image']));
+        categoryId: json["id"],
+        categoryName: json["name"],
+        categoryDesc: json["description"],
+        parent: json["parent"],
+        image: Img.fromJson(
+          json['image'],
+        ),
+      );
 }
 
 class Img {

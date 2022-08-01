@@ -11,10 +11,13 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetails(
-          product: data,
-        )));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ProductDetails(
+                      product: data,
+                    )));
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -183,7 +186,7 @@ class ProductCard extends StatelessWidget {
                         ),
                         const Spacer(),
                         Visibility(
-                          visible: data!.calculateDiscount() > 0 ,
+                          visible: data!.calculateDiscount() > 0,
                           child: Container(
                             decoration: BoxDecoration(
                               border: Border.all(

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:khoj_tech/pages/product_page.dart';
 import 'package:khoj_tech/pages/splash_page.dart';
 import 'package:khoj_tech/provider/products_provider.dart';
-import 'package:khoj_tech/widgets/bottom_nav_bar_widget.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => ProductProvider(),
           child: ProductPage(),
-        )
+        ),
+        
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

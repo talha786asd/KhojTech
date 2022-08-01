@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:khoj_tech/utils/ProgressHUD.dart';
+import 'package:khoj_tech/widgets/badge.dart';
 import 'package:khoj_tech/widgets/icon_button_widget.dart';
 import 'package:khoj_tech/widgets/text_widget.dart';
 
 class BasePage extends StatefulWidget {
-    BasePage({Key? key}) : super(key: key);
+  BasePage({Key? key}) : super(key: key);
 
   @override
   BasePageState createState() => BasePageState();
@@ -53,7 +54,14 @@ class BasePageState<T extends BasePage> extends State<T> {
           0xff414042,
         ),
       ),
-    
+      actions: [
+        IconButton(
+            onPressed: () {},
+            icon: Badge(child: Icon(Icons.shopping_cart,
+            color: Color(
+                              0xff292665,
+                            ),), value: '0'))
+      ],
     );
   }
 }

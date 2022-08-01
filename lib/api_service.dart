@@ -44,8 +44,9 @@ class APIService {
         Config.sliderURL,
       ),
     );
-
-    return sliderModelFromJson(response.body);
+    return sliderModelFromJson(
+      response.body,
+    );
   }
 
   Future<List<Category>> getCategories() async {
@@ -108,7 +109,11 @@ class APIService {
         url,
       ),
     );
-    print(productFromJson(response.body));
+    print(
+      productFromJson(
+        response.body,
+    ),
+    );
     return productFromJson(
       response.body,
     );

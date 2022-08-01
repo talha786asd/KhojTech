@@ -8,6 +8,7 @@ import 'package:khoj_tech/utils/form_helper.dart';
 import 'package:khoj_tech/widgets/icon_button_widget.dart';
 import 'package:khoj_tech/widgets/text_widget.dart';
 import 'package:khoj_tech/utils/validator_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -237,15 +238,30 @@ class _SignupPageState extends State<SignupPage> {
                         setState(() {
                           isApiCallProcess = true;
                         });
-                        apiService!.postSignup(model!).then((ret) {
+                        apiService!.postSignup(model!).then((ret) async {
                           setState(() {
                             isApiCallProcess = false;
                           });
+                          SharedPreferences preferences =
+                              await SharedPreferences.getInstance();
+
+                          await preferences.setString('email', model!.email!);
+                          await preferences.setString('name', model!.name!);
+                          await preferences.setString('phone', model!.phone!);
+                          await preferences.setString(
+                              'shopAddress', model!.shopAddress!);
+                          await preferences.setString(
+                              'shopName', model!.shopName!);
+                          await preferences.setString('cnic', model!.cnic!);
 
                           if (ret.status == '1') {
-                            FormHelper.showMessage(context, 'Khoj Tech',
-                                'Registration Successfull\nPlease Login', "Ok", () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LoginPage()));
+                            FormHelper.showMessage(
+                                context,
+                                'Khoj Tech',
+                                'Registration Successfull\nPlease Login',
+                                "Ok", () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => LoginPage()));
                             });
                           } else {
                             FormHelper.showMessage(context, 'Khoj Tech',

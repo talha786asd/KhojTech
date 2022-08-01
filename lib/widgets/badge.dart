@@ -19,7 +19,7 @@ class Badge extends StatelessWidget {
       children: [
         child!,
         Positioned(
-          right: 0,
+ right: 0,
           top: 0,
           child: Container(
             padding: EdgeInsets.all(2.0),
@@ -28,9 +28,7 @@ class Badge extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.0),
               color: color != null
                   ? color
-                  : Color(
-                      0xff292665,
-                    ),
+                  : Colors.pink
             ),
             constraints: BoxConstraints(
               minWidth: 16,

@@ -7,8 +7,8 @@ import 'package:khoj_tech/utils/expand_text.dart';
 import 'package:khoj_tech/widgets/widget_related_products.dart';
 
 class ProductDetailsWidget extends StatelessWidget {
-  ProductDetailsWidget({Key? key, this.data, this.variableProducts}) : super(key: key);
-
+  ProductDetailsWidget({Key? key, this.data, this.variableProducts})
+      : super(key: key);
 
   List<VariableProduct>? variableProducts;
   Product? data;
@@ -63,40 +63,35 @@ class ProductDetailsWidget extends StatelessWidget {
                     Visibility(
                       visible: data!.type != "variable",
                       child: Text(
-                      data!.attributes != null && data!.attributes!.length > 0
-                          ? (data!.attributes![0].options!
-                                  .join("-")
-                                  .toString() +
-                              "" +
-                              data!.attributes![0].name!)
-                          : "",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
+                        data!.attributes != null && data!.attributes!.length > 0
+                            ? (data!.attributes![0].options!
+                                    .join("-")
+                                    .toString() +
+                                "" +
+                                data!.attributes![0].name!)
+                            : "",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
                             fontSize: 15,
                             color: Colors.grey[600],
-                            fontWeight: FontWeight.w500
-                          ),
-                    ),),
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
                     Visibility(
                       visible: data!.type == "variable",
-                      child: selectDropdown(
-                        context, "",
-                         this.variableProducts,
-                          (VariableProduct value){
-                            this.data!.price = value.price;
-                            this.data!.variableProduct = value;
-
-                         }
-                        ),
-                        ),
-                    
+                      child: selectDropdown(context, "", this.variableProducts,
+                          (VariableProduct value) {
+                        this.data!.price = value.price;
+                        this.data!.variableProduct = value;
+                      }),
+                    ),
                     Text(
                       'PKR ${data!.price}',
                       style: TextStyle(
                           fontSize: 25,
                           color: Color(
-                                    0xff292665,
-                                  ),
+                            0xff292665,
+                          ),
                           fontWeight: FontWeight.bold),
                     )
                   ],
@@ -124,25 +119,29 @@ class ProductDetailsWidget extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       ),
                       color: Color(
-                                    0xff292665,
-                                  ),
+                        0xff292665,
+                      ),
                       padding: EdgeInsets.all(15),
                       shape: StadiumBorder(),
                     )
                   ],
                 ),
-                SizedBox(height: 5,),
+                SizedBox(
+                  height: 5,
+                ),
                 ExpandText(
-                  labelHeader: "Product Details", shortDesc: data!.shortDescription,
+                  labelHeader: "Product Details",
+                  shortDesc: data!.shortDescription,
                   desc: data!.description,
                 ),
                 Divider(),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 WidgetRelatedProducts(
                   labelName: 'Related Products',
                   products: this.data!.relatedIds,
                 )
-
               ],
             )
           ],
@@ -212,9 +211,8 @@ class ProductDetailsWidget extends StatelessWidget {
     Object initialValue,
     dynamic data,
     Function onChanged, {
-      Function? onValidate,
-    }
-  ){
+    Function? onValidate,
+  }) {
     return Align(
       alignment: Alignment.topLeft,
       child: Container(
@@ -229,26 +227,21 @@ class ProductDetailsWidget extends StatelessWidget {
           onChanged: (VariableProduct? newValue) {
             FocusScope.of(context).requestFocus(FocusNode());
             onChanged(newValue);
-            
           },
-         
-          items: data != null ? data.map<DropdownMenuItem<VariableProduct>>(
-            (VariableProduct data){
-              return DropdownMenuItem<VariableProduct>(
-                value: data,
-                child: Text(
-                  data.attributes!.first.option! + 
-                  " " +
-                  data.attributes!.first.name!,
-                  style: TextStyle(
-                    color: Colors.black
-                  ),
-                ));
-            },
-          ).toList()
-          : null,
-
-          
+          items: data != null
+              ? data.map<DropdownMenuItem<VariableProduct>>(
+                  (VariableProduct data) {
+                    return DropdownMenuItem<VariableProduct>(
+                        value: data,
+                        child: Text(
+                          data.attributes!.first.option! +
+                              " " +
+                              data.attributes!.first.name!,
+                          style: TextStyle(color: Colors.black),
+                        ));
+                  },
+                ).toList()
+              : null,
         ),
       ),
     );
@@ -258,36 +251,26 @@ class ProductDetailsWidget extends StatelessWidget {
     BuildContext context,
     String hintText,
     String helperText, {
-      Widget? prefixIcon,
-      Widget? suffixIcon,
-
-    }
-
-  ){
+    Widget? prefixIcon,
+    Widget? suffixIcon,
+  }) {
     return InputDecoration(
-      contentPadding: EdgeInsets.all(6),
-      hintText: helperText,
-      helperText: helperText,
-      prefixIcon: prefixIcon,
-      suffixIcon: suffixIcon,
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Color(
-                    0xff292665,
-                  ),
-          width: 1
-        )
-      ),
-      border: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Color(
-                    0xff292665,
-                  ),
-          width: 1
-        )
-      )
-
-    );
-
+        contentPadding: EdgeInsets.all(6),
+        hintText: helperText,
+        helperText: helperText,
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+                color: Color(
+                  0xff292665,
+                ),
+                width: 1)),
+        border: OutlineInputBorder(
+            borderSide: BorderSide(
+                color: Color(
+                  0xff292665,
+                ),
+                width: 1)));
   }
 }
