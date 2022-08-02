@@ -95,7 +95,8 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppbarWidget(context),
       body: Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height - AppbarWidget(context).preferredSize.height,
+        height: MediaQuery.of(context).size.height -
+            AppbarWidget(context).preferredSize.height,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -114,109 +115,117 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: MediaQuery.of(context).size.height * .03,
               ),
               Card(
-                  color: Colors.white,
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.email,
-                      color: Color(
-                  0xff292665,
-                ),
-                    ),
-                    title: Text(
-                      email.toString(),
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 20,
-                      ),
+                color: Colors.white,
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.email,
+                    color: Color(
+                      0xff292665,
                     ),
                   ),
-              ),
-               Card(
-                  color: Colors.white,
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.phone,
-                      color: Color(
-                  0xff292665,
-                ),
-                    ),
-                    title: Text(
-                      phone.toString(),
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 20,
-                      ),
+                  title: Text(
+                    email.toString(),
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 20,
                     ),
                   ),
-              ),
-               Card(
-                  color: Colors.white,
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.person,
-                      color: Color(
-                  0xff292665,
                 ),
-                    ),
-                    title: Text(
-                      shopName.toString(),
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 20,
-                      ),
+              ),
+              Card(
+                color: Colors.white,
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                child: ListTile(
+                  leading: const Icon(
+                    Icons.phone,
+                    color: Color(
+                      0xff292665,
                     ),
                   ),
-              ),
-               Card(
-                  color: Colors.white,
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.location_city,
-                      color: Color(
-                  0xff292665,
-                ),
-                    ),
-                    title: Text(
-                      shopAddress.toString(),
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 20,
-                      ),
+                  title: Text(
+                    phone.toString(),
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 20,
                     ),
                   ),
-              ),
-               Card(
-                  color: Colors.white,
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.person,
-                      color: Color(
-                  0xff292665,
                 ),
-                    ),
-                    title: Text(
-                      cnic.toString(),
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 20,
-                      ),
+              ),
+              Card(
+                color: Colors.white,
+                margin: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 25,
+                ),
+                child: ListTile(
+                  leading: const Icon(
+                    Icons.person,
+                    color: Color(
+                      0xff292665,
                     ),
                   ),
+                  title: Text(
+                    shopName.toString(),
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
               ),
-              
-           
+              Card(
+                color: Colors.white,
+                margin: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 25,
+                ),
+                child: ListTile(
+                  leading: const Icon(
+                    Icons.location_city,
+                    color: Color(
+                      0xff292665,
+                    ),
+                  ),
+                  title: Text(
+                    shopAddress.toString(),
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+              Card(
+                color: Colors.white,
+                margin: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 25,
+                ),
+                child: ListTile(
+                  leading: const Icon(
+                    Icons.person,
+                    color: Color(
+                      0xff292665,
+                    ),
+                  ),
+                  title: Text(
+                    cnic.toString(),
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
   }
-    AppBar AppbarWidget(BuildContext context) {
+
+  AppBar AppbarWidget(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
       centerTitle: true,

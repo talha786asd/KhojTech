@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:khoj_tech/pages/cart_page.dart';
+import 'package:khoj_tech/provider/cart_provider.dart';
 import 'package:khoj_tech/utils/ProgressHUD.dart';
 import 'package:khoj_tech/widgets/badge.dart';
 import 'package:khoj_tech/widgets/icon_button_widget.dart';
 import 'package:khoj_tech/widgets/text_widget.dart';
+import 'package:provider/provider.dart';
 
 class BasePage extends StatefulWidget {
   BasePage({Key? key}) : super(key: key);
@@ -56,11 +59,17 @@ class BasePageState<T extends BasePage> extends State<T> {
       ),
       actions: [
         IconButton(
-            onPressed: () {},
-            icon: Badge(child: Icon(Icons.shopping_cart,
-            color: Color(
-                              0xff292665,
-                            ),), value: '0'))
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> CartPage()));
+            },
+            icon: Badge(
+                child: Icon(
+                  Icons.shopping_cart,
+                  color: Color(
+                    0xff292665,
+                  ),
+                ),
+                value: Provider.of<CartProvider>(context).itemCount.toString()))
       ],
     );
   }

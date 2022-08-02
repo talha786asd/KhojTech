@@ -4,6 +4,7 @@ class CartModel {
   int? quantity;
   String? price;
   String? image;
+ 
 
   CartModel({
     this.id,
@@ -11,5 +12,6 @@ class CartModel {
     this.quantity,
     this.price,
     this.image,
+   
   });
 }

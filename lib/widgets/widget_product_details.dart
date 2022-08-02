@@ -2,9 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:khoj_tech/models/product.dart';
 import 'package:khoj_tech/models/variable_product.dart';
+import 'package:khoj_tech/provider/cart_provider.dart';
 import 'package:khoj_tech/utils/custom.stepper.dart';
 import 'package:khoj_tech/utils/expand_text.dart';
 import 'package:khoj_tech/widgets/widget_related_products.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetailsWidget extends StatelessWidget {
   ProductDetailsWidget({Key? key, this.data, this.variableProducts})
@@ -13,10 +15,11 @@ class ProductDetailsWidget extends StatelessWidget {
   List<VariableProduct>? variableProducts;
   Product? data;
   final CarouselController _controller = CarouselController();
-  int? qty = 0;
+  int? qty = 1;
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartProvider>(context, listen: false);
     return SingleChildScrollView(
       child: Container(
         color: Colors.white,
@@ -28,7 +31,7 @@ class ProductDetailsWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 productImages(data!.images!, context),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Visibility(
@@ -36,22 +39,24 @@ class ProductDetailsWidget extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(color: Colors.pink),
+                        padding: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(color: Colors.pink),
                         child: Text(
                           '${data!.calculateDiscount()}% OFF',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Text(
                   data!.name!,
                   textAlign: TextAlign.start,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 25,
                       color: Colors.black,
                       fontWeight: FontWeight.bold),
@@ -72,49 +77,58 @@ class ProductDetailsWidget extends StatelessWidget {
                             : "",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.w500),
+                          fontSize: 15,
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                     Visibility(
                       visible: data!.type == "variable",
-                      child: selectDropdown(context, "", this.variableProducts,
-                          (VariableProduct value) {
-                        this.data!.price = value.price;
-                        this.data!.variableProduct = value;
-                      }),
+                      child: selectDropdown(
+                        context,
+                        "",
+                        this.variableProducts,
+                        (VariableProduct value) {
+                          this.data!.price = value.price;
+                          this.data!.variableProduct = value;
+                        },
+                      ),
                     ),
                     Text(
                       'PKR ${data!.price}',
-                      style: TextStyle(
-                          fontSize: 25,
-                          color: Color(
-                            0xff292665,
-                          ),
-                          fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        fontSize: 25,
+                        color: Color(
+                          0xff292665,
+                        ),
+                        fontWeight: FontWeight.bold,
+                      ),
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    CustomStepper(
-                      lowerLimit: 0,
-                      upperLimit: 20,
-                      stepValue: 1,
-                      iconSize: 22,
-                      value: this.qty,
-                      onChanged: (value) {
-                        print(value);
-                      },
-                    ),
+                    // CustomStepper(
+                    //   lowerLimit: 0,
+                    //   upperLimit: 20,
+                    //   stepValue: 1,
+                    //   iconSize: 22,
+                    //   value: this.qty,
+                    //   onChanged: (value) {
+                    //     print(value);
+                    //   },
+                    // ),
                     FlatButton(
-                      onPressed: () {},
-                      child: Text(
+                      onPressed: () {
+                        cart.addItem(data!.id!, data!.price!, data!.name!,
+                            data!.images![0].src!);
+                      },
+                      child: const Text(
                         "Add to Cart",
                         style: TextStyle(color: Colors.white),
                       ),

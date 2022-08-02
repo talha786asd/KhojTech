@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:khoj_tech/provider/cart_provider.dart';
+import 'package:khoj_tech/widgets/icon_button_widget.dart';
 import 'package:khoj_tech/widgets/text_widget.dart';
+import 'package:provider/provider.dart';
 
 class CartPage extends StatefulWidget {
   @override
@@ -9,6 +12,8 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartProvider>(context);
+
     return Scaffold(
       appBar: AppbarWidget(context),
       body: Container(
@@ -45,7 +50,7 @@ class _CartPageState extends State<CartPage> {
                 width: MediaQuery.of(context).size.width * .9,
                 child: ListView.builder(
                   shrinkWrap: true,
-                  //  itemCount: items.length,
+                  itemCount: cart.items.length,
                   itemBuilder: ((context, index) => ListTile(
                         leading: Container(
                           decoration: BoxDecoration(
@@ -61,7 +66,7 @@ class _CartPageState extends State<CartPage> {
                           width: MediaQuery.of(context).size.width * .18,
                           height: MediaQuery.of(context).size.height * .07,
                           child: Image.network(
-                            '',
+                            cart.items.values.toList()[index].image.toString(),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -70,7 +75,7 @@ class _CartPageState extends State<CartPage> {
                           fontSize: 17,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          text: "",
+                          text: cart.items.values.toList()[index].title!,
                           fontWeight: FontWeight.bold,
                         ),
                         subtitle: TextWidget(
@@ -78,13 +83,15 @@ class _CartPageState extends State<CartPage> {
                               0xff414042,
                             ),
                             fontSize: 15,
-                            text: 'PKR'),
+                            text:
+                                'PKR ${(double.parse(cart.items.values.toList()[index].price!) * cart.items.values.toList()[index].quantity!)}'),
                         trailing: TextWidget(
                           color: const Color(
                             0xff292665,
                           ),
                           fontSize: 15,
-                          text: "x",
+                          text:
+                              "x ${cart.items.values.toList()[index].quantity!}",
                           fontWeight: FontWeight.bold,
                         ),
                       )),
@@ -236,10 +243,20 @@ class _CartPageState extends State<CartPage> {
       backgroundColor: Colors.white,
       centerTitle: true,
       title: const TextWidget(
-        text: 'Check out',
+        text: 'Your Cart',
         fontSize: 19,
         fontWeight: FontWeight.bold,
         color: Color(
+          0xff414042,
+        ),
+      ),
+      leading: IconButtonWidget(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        icon: Icons.arrow_back_ios,
+        iconSize: 19,
+        color: const Color(
           0xff414042,
         ),
       ),
